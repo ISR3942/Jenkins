@@ -24,7 +24,7 @@ body, html {
 </head>
 <body>
 
-<div class="bg"><marquee direction="left" style = "color:Yellow;font-size:50px;padding-top:200px" behaviour="alternative">ISR AQUA</marquee></div>
+<div class="bg"><marquee direction="left" style = "color:Yellow;font-size:50px;padding-top:200px" behaviour="alternative">ISR AquaWebPage</marquee></div>
 
 
 
