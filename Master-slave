@@ -14,8 +14,11 @@ pipeline {
     }
     stages {
         stage('git') {
+            when{
+                expression {params.deployEnv == 'dev'} 
+            }
             agent {
-                label ' "$nodes[params.deployEnv]" '
+                label "$nodes[params.deployEnv]"
             }
             steps {
                 git credentialsId: 'git', url: 'https://github.com/ISR3942/Jenkins'
