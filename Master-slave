@@ -13,11 +13,18 @@ pipeline {
     }
     stages {
         stage('git') {
+            agent {
+                label "master"
+            }
             steps {
                 git credentialsId: 'git', url: 'https://github.com/ISR3942/Jenkins'
             }
         }
         stage('mvn install') {
+            
+            agent {
+                label "master"
+            }
             steps {
                 sh script: 'mvn clean deploy'
             }
