@@ -16,7 +16,7 @@ pipeline {
                 sh script: 'mvn clean deploy'
             }
         }
-        stage('Tomcat Deploy Dev') {
+        stage('Tomcat Deploy QA') {
             
             steps {
                 sshagent(['tomcat']) {
