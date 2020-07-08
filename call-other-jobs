@@ -1,0 +1,27 @@
+pipeline {
+    agent any
+    parameters {
+      choice choices: ['dev', 'qa'], description: 'Choose environment to Deploy', name: 'deployEnv'
+      choice choices: ['master'], description: 'Choose branch to Deploy', name: 'deployBranch'
+    }
+    stages {
+        stage ('Deploy in Dev') {
+            when{
+                expression {params.deployEnv == 'dev'} 
+            }
+            steps{
+                build job: 'Dev-Deploy'    
+            }
+        }
+		stage ('Deploy in qa') {
+            when{
+                expression {params.deployEnv == 'dev'} 
+            }
+            steps{
+                build job: 'QA-Deploy'    
+            }
+        }
+		
+    }
+	
+}
