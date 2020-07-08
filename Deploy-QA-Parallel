@@ -1,0 +1,36 @@
+pipeline {
+    agent {label 'jenkins-slave2'}
+    environment {
+      TOMCAT_HOST = "ec2-user@52.150.15.96"
+      TOMCAT_WEB_LOCATION = "/opt/tomcat8/webapps"
+      SOURCE_LOCATION = "target/aquaweb.war"
+    }
+    stages {
+        stage('git') {
+            steps {
+                git credentialsId: 'git', url: 'https://github.com/ISR3942/Jenkins'
+            }
+        }
+        stage('mvn install') {
+            steps {
+                sh script: 'mvn clean deploy'
+            }
+        }
+        stage('Tomcat Deploy Dev') {
+            
+            steps {
+                sshagent(['tomcat']) {
+                    sh script: "scp -o StrictHostKeyChecking=no ${SOURCE_LOCATION} ${TOMCAT_HOST}:${TOMCAT_WEB_LOCATION}"
+                }
+            }
+        }
+    }
+    post {
+      always {
+        mail body: "Hello Developer, your job, ${env.JOB_NAME}, said ${currentBuild.result}. Build url, ${env.BUILD_URL} ", 
+            subject: "jenkins job status", 
+             to: 'indukurisriramaraju7@gmail.com',
+             from: 'indukuri.sriram@gmail.com'
+      }
+    }
+}
