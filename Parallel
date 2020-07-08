@@ -1,0 +1,20 @@
+pipeline {
+    agent any
+    stages {
+      stage ('Parallel-stage') {
+        parallel {
+          stage ('Deploy in Dev') {
+            steps{
+                  build job: 'Dev-Deploy'    
+            }
+          }
+          stage ('Deploy in qa') {
+            steps{
+                  build job: 'QA-Deploy'    
+            }
+          }
+        }
+		  }
+    }
+	
+}
